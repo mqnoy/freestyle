@@ -15,7 +15,8 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > ../private.key
           sudo chmod 600 ../private.key
           sudo ssh-keyscan imzazmi.my.id >> ~/.ssh/known_hosts
-          sudo ssh -i ../private.key apps@imzazmi.my.id "echo 'hi im $USER on $PWD' "
+          
+      - run: ssh -i ../private.key apps@imzazmi.my.id "echo 'hi im $USER on $PWD' "
         shell: bash
         
         env:
