@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  staging:
     runs-on: ubuntu-22.04
     steps:
       - name: Install SSH Key
@@ -15,16 +15,8 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           known_hosts: 'just-a-placeholder-so-we-dont-get-errors'
       - run: ssh-keyscan -H imzazmi.my.id >> ~/.ssh/known_hosts
-      - run: ssh apps@imzazmi.my.id "echo 'hi im $USER on $PWD' "
-  staging:
-    runs-on: ubuntu-22.04
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-      - run: npm install -g bats
-      - run: bats -v
+      - run: ssh apps@imzazmi.my.id 'cd /home/apps && ./deploy.sh'
+      
   production:
     runs-on: ubuntu-22.04
     steps:
