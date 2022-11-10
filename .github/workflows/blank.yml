@@ -11,10 +11,10 @@ jobs:
     steps:
       - name: Create SSH key
         run: |
-          mkdir -p ~/.ssh/
-          echo "$SSH_PRIVATE_KEY" > ../private.key
-          sudo chmod 600 ../private.key
-          echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          apt-get install -y ssh
+          echo $SSH_PRIVATE_KEY > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan imzazmi.my.id >> ~/.ssh/known_hosts
           ssh apps@imzazmi.my.id "echo 'hi im $USER on $PWD' "
         shell: bash
         
